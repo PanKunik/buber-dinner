@@ -28,7 +28,7 @@ public class AuthenticationService : IAuthenticationService
         }
 
         var token = _jwtTokenGenerator.GenerateToken(user);
-        
+
         return new AuthenticationResult(
             user,
             token);
@@ -50,9 +50,9 @@ public class AuthenticationService : IAuthenticationService
         };
 
         _userRepository.Add(user);
-        
+
         var token = _jwtTokenGenerator.GenerateToken(user);
-        
+
         return new AuthenticationResult(
             user,
             token);
