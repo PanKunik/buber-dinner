@@ -1,9 +1,9 @@
-@host=https://localhost:7122
+@host=https://localhost:5001
 
 POST {{host}}/authentication/login
 Content-Type: application/json
 
 {
     "email": "t.heinz@contoso.com",
-    "password": "Pwd12345."
+    "password": "Pwd12345"
 }

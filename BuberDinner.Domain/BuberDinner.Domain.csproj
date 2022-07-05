@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="erroror" Version="0.1.0" />
+  </ItemGroup>
+
 </Project>
