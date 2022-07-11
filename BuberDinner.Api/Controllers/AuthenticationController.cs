@@ -1,29 +1,34 @@
 using Microsoft.AspNetCore.Mvc;
 using BuberDinner.Contracts.Authentication;
-using BuberDinner.Application.Services.Authentication;
 using ErrorOr;
 using BuberDinner.Domain.Common.Errors;
+using MediatR;
+using BuberDinner.Application.Authentication.Commands.Register;
+using BuberDinner.Application.Authentication.Queries.Login;
+using BuberDinner.Application.Authentication.Common;
 
 namespace BuberDinner.Api.Controllers;
 
 [Route("authentication")]
 public class AuthenticationController : ApiController
 {
-    private readonly IAuthenticationService _authenticationService;
+    private readonly ISender _mediator;
 
-    public AuthenticationController(IAuthenticationService authenticationService)
+    public AuthenticationController(ISender mediator)
     {
-        _authenticationService = authenticationService;
+        _mediator = mediator;
     }
 
     [Route("register")]
-    public IActionResult Register(RegisterRequest request)
+    public async Task<IActionResult> Register(RegisterRequest request)
     {
-        ErrorOr<AuthenticationResult> authenticationResult = _authenticationService.Register(
+        var command = new RegisterCommand(
             request.FirstName,
             request.LastName,
             request.Email,
             request.Password);
+
+        var authenticationResult = await _mediator.Send(command);
 
         return authenticationResult.Match(
             authenticationResult => Ok(MapAuthResult(authenticationResult)),
@@ -41,11 +46,10 @@ public class AuthenticationController : ApiController
     }
 
     [Route("login")]
-    public IActionResult Login(LoginRequest request)
+    public async Task<IActionResult> Login(LoginRequest request)
     {
-        ErrorOr<AuthenticationResult> authenticationResult = _authenticationService.Login(
-            request.Email,
-            request.Password);
+        var query = new LoginQuery(request.Email, request.Password);
+        var authenticationResult = await _mediator.Send(query);
 
         if(authenticationResult.IsError && authenticationResult.FirstError == Errors.Authentication.InvalidCredentials)
         {
