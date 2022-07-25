@@ -12,5 +12,10 @@
     <ProjectReference Include="..\BuberDinner.Application\BuberDinner.Application.csproj" />
     <ProjectReference Include="..\BuberDinner.Infrastructure\BuberDinner.Infrastructure.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="MApster" Version="7.3.0" />
+    <PackageReference Include="MApster.DependencyInjection" Version="1.0.0" />
+  </ItemGroup>
 
 </Project>

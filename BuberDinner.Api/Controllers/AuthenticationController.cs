@@ -6,6 +6,7 @@ using MediatR;
 using BuberDinner.Application.Authentication.Commands.Register;
 using BuberDinner.Application.Authentication.Queries.Login;
 using BuberDinner.Application.Authentication.Common;
+using MapsterMapper;
 
 namespace BuberDinner.Api.Controllers;
 
@@ -13,42 +14,29 @@ namespace BuberDinner.Api.Controllers;
 public class AuthenticationController : ApiController
 {
     private readonly ISender _mediator;
+    private readonly IMapper _mapper;
 
-    public AuthenticationController(ISender mediator)
+    public AuthenticationController(ISender mediator, IMapper mapper)
     {
         _mediator = mediator;
+        _mapper = mapper;
     }
 
     [Route("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var command = new RegisterCommand(
-            request.FirstName,
-            request.LastName,
-            request.Email,
-            request.Password);
-
+        var command = _mapper.Map<RegisterCommand>(request);
         var authenticationResult = await _mediator.Send(command);
 
         return authenticationResult.Match(
-            authenticationResult => Ok(MapAuthResult(authenticationResult)),
+            authenticationResult => Ok(_mapper.Map<AuthenticationResponse>(authenticationResult)),
             errors => Problem(errors));
-    }
-
-    private static AuthenticationResponse MapAuthResult(AuthenticationResult authenticationResult)
-    {
-        return new AuthenticationResponse(
-            authenticationResult.User.Id,
-            authenticationResult.User.FirstName,
-            authenticationResult.User.LastName,
-            authenticationResult.User.Email,
-            authenticationResult.Token);
     }
 
     [Route("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
-        var query = new LoginQuery(request.Email, request.Password);
+        var query = _mapper.Map<LoginQuery>(request);
         var authenticationResult = await _mediator.Send(query);
 
         if(authenticationResult.IsError && authenticationResult.FirstError == Errors.Authentication.InvalidCredentials)
@@ -59,7 +47,7 @@ public class AuthenticationController : ApiController
         }
 
         return authenticationResult.Match(
-            authenticationResult => Ok(MapAuthResult(authenticationResult)),
+            authenticationResult => Ok(_mapper.Map<AuthenticationResponse>(authenticationResult)),
             errors => Problem(errors));
     }
 }
