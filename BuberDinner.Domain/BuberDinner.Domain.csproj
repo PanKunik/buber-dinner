@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="erroror" Version="0.1.0" />
+    <PackageReference Include="erroror" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
