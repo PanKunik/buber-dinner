@@ -20,4 +20,7 @@ public sealed class UserId : ValueObject
     {
         yield return Value;
     }
+
+    public static implicit operator Guid(UserId data)
+        => data.Value;
 }
