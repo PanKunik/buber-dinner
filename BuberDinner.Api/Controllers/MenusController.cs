@@ -21,7 +21,7 @@ public class MenusController : ApiController
     [HttpPost]
     public async Task<IActionResult> CreateMenu(
         CreateMenuRequest request,
-        string hostId)
+        Guid hostId)
     {
         var command = _mapper.Map<CreateMenuCommand>((request, hostId));
 
