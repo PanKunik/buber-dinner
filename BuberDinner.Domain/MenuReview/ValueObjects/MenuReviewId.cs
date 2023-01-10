@@ -20,4 +20,6 @@ public sealed class MenuReviewId : ValueObject
     {
         yield return Value;
     }
+
+    private MenuReviewId() { }
 }

@@ -1,11 +1,11 @@
 using BuberDinner.Application.Common.Interfaces.Persistence;
 using BuberDinner.Domain.Users;
 
-namespace BuberDinner.Infrastructure.Persistence;
+namespace BuberDinner.Infrastructure.Persistence.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private static readonly List<User> _users = new ();
+    private static readonly List<User> _users = new();
 
     public User? GetUserByEmail(string email)
     {
