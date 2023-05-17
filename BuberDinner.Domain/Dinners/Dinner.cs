@@ -7,7 +7,7 @@ using BuberDinner.Domain.Menus.ValueObjects;
 
 namespace BuberDinner.Domain.Dinners;
 
-public sealed class Dinner : AggregateRoot<DinnerId>
+public sealed class Dinner : AggregateRoot<DinnerId, Guid>
 {
     private readonly List<Reservation> _reservations = new();
 
@@ -96,4 +96,8 @@ public sealed class Dinner : AggregateRoot<DinnerId>
             DateTime.UtcNow,
             DateTime.UtcNow);
     }
+
+#pragma warning disable CS8618
+    private Dinner() { }
+#pragma warning restore CS8618
 }

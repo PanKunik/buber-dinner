@@ -7,7 +7,7 @@ using BuberDinner.Domain.Users.ValueObjects;
 
 namespace BuberDinner.Domain.Hosts;
 
-public sealed class Host : AggregateRoot<HostId>
+public sealed class Host : AggregateRoot<HostId, Guid>
 {
     private readonly List<MenuId> _menuIds = new();
     private readonly List<DinnerId> _dinnerIds = new();
@@ -61,4 +61,8 @@ public sealed class Host : AggregateRoot<HostId>
             DateTime.UtcNow,
             DateTime.UtcNow);
     }
+
+#pragma warning disable CS8618
+    private Host() { }
+#pragma warning restore CS8618
 }

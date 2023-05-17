@@ -4,10 +4,10 @@ namespace BuberDinner.Domain.Dinners.ValueObjects;
 
 public sealed class Location : ValueObject
 {
-    public string Name { get; }
-    public string Description { get; }
-    public double Latitude { get; }
-    public double Longitude { get; }
+    public string Name { get; private set; }
+    public string Description { get; private set; }
+    public double Latitude { get; private set; }
+    public double Longitude { get; private set; }
 
     private Location(
         string name,
