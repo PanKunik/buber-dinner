@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="erroror" Version="1.0.0" />
+    <PackageReference Include="Mediatr" Version="10.0.1" />
   </ItemGroup>
 
 </Project>
