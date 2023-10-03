@@ -1,0 +1,16 @@
+services:
+  sql-data:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - SA_PASSWORD=amiko123!
+      - ACCEPT_EULA=Y
+      - HOMEBREW_NO_ENV_FILTERING=1
+    ports:
+      - "1433:1433"
+  api:
+    build:
+      context: .
+    ports:
+      - "8089:80"
+    depends_on:
+      - sql-data
